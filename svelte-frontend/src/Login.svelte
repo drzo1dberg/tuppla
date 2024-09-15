@@ -2,9 +2,10 @@
     import {authToken} from './stores';
     let username = '';
     let password = '';
+    const API_URL = 'http://backend:8080/api'; // Innerhalb des Docker-Netzwerks
 
     async function login(){
-        const res = await fetch('http://localhost:8080/api/login', {
+        const res = await fetch(API_URL + '/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password}),

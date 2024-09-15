@@ -1,0 +1,23 @@
+version: '3'
+services:
+  backend:
+    build: ./go-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - JWT_SECRET=6a7f4d1d9a8b67f32c90dfe4b9a6e9d6f8a7c9d2e6f9a9b2d9f4c7b2d1e9f7a4
+    networks:
+      - app-network
+
+  frontend:
+    build: ./svelte-frontend
+    ports:
+      - "5000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

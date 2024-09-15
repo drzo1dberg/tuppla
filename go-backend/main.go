@@ -21,8 +21,14 @@ var jwtSecret = []byte("6a7f4d1d9a8b67f32c90dfe4b9a6e9d6f8a7c9d2e6f9a9b2d9f4c7b2
 func main () {
    initDatabase()
    router := gin.Default()
-   router.Use(cors.Default())
-
+   router.Use(cors.New(cors.Config{
+	AllowOrigins:     []string{"*"},
+	AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
+	ExposeHeaders:    []string{"Content-Length"},
+	AllowCredentials: true,
+	MaxAge: 12 * time.Hour,
+}))
    router.POST("/api/register", func(ctx *gin.Context) {
 	var input struct {
 		Username string `json:"username" binding:"required"`
